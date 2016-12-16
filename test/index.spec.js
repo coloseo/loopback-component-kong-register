@@ -1,5 +1,4 @@
 const nock = require('nock');
-const authRequest = require('supertest')('http://localhost:3000');
 const HTTPStatus = require('http-status');
 const Chance = require('chance');
 const component = require('./../index');
