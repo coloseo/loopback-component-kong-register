@@ -1,0 +1,37 @@
+{
+  "name": "loopback-component-kong-register",
+  "version": "1.0.0",
+  "description": "register your apis and plugin into kong",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "DEBUG=loopback:component:registry:kong node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coloseo/loopback-component-kong-register.git"
+  },
+  "keywords": [
+    "loopback",
+    "component",
+    "kong"
+  ],
+  "author": "ColoseoInc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coloseo/loopback-component-kong-register/issues"
+  },
+  "homepage": "https://github.com/coloseo/loopback-component-kong-register#readme",
+  "dependencies": {
+    "debug": "^2.4.4",
+    "http-status": "^0.2.3",
+    "superagent": "^3.3.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chance": "^1.0.4",
+    "mocha": "^3.2.0",
+    "nock": "^9.0.2",
+    "supertest": "^2.0.1"
+  }
+}
