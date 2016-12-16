@@ -4,16 +4,15 @@ const debug = require('debug')('loopback:component:registry:kong');
 const assert = require('assert');
 
 module.exports = function RegisterToKong(app, { gateway, upstream, apis = [] }) {
-  assert(upstream.endsWith('/'), "upstream must end with /");
+  assert(upstream.endsWith('/'), 'upstream must end with /');
 
-  apis.forEach(function (api) {
+  apis.forEach((api) => {
     assert(api.path.startsWith('/'), 'path of api must start with /');
   });
 
   const RegisterApi = function RegisterApi(params) {
     return new Promise((resolve, reject) => {
       Request.post(`${gateway}/apis`).send(params).end((err, res) => {
-
         if (!res && err) throw err;
         const statusCode = res.status;
         const result = res.body;
@@ -77,7 +76,7 @@ module.exports = function RegisterToKong(app, { gateway, upstream, apis = [] }) 
       if (error.statusCode !== HTTPStatus.CONFLICT) {
         debug(`register api ${data.name} failed: statuscode is ${error.statusCode} message is: ${JSON.stringify(error.message)}`);
       } else {
-        //if api has alreay been registered, plugin register.
+        // if api has alreay been registered, plugin register.
         debug(`api ${data.name} has been registered`);
         plugins.forEach((plugin) => {
           dealPlugin(plugin, api.name);

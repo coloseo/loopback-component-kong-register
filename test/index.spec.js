@@ -6,20 +6,20 @@ const expect = require('chai').expect;
 
 const chance = new Chance();
 
-var params = {
-    gateway: chance.domain(),
-    upstream: `${chance.domain()}/`,
-    apis: [
-      {
-        name: chance.string({length: 6}),
-        path: `/${chance.string({length: 3})}/${chance.string({length: 6})}`,
-        plugins: ['jwt'],
-      },
-      {
-        name: chance.string({length: 6}),
-        path: `/${chance.string({length: 3})}/${chance.string({length: 6})}`,
-      },
-    ],
+const params = {
+  gateway: chance.domain(),
+  upstream: `${chance.domain()}/`,
+  apis: [
+    {
+      name: chance.string({ length: 6 }),
+      path: `/${chance.string({ length: 3 })}/${chance.string({ length: 6 })}`,
+      plugins: ['jwt'],
+    },
+    {
+      name: chance.string({ length: 6 }),
+      path: `/${chance.string({ length: 3 })}/${chance.string({ length: 6 })}`,
+    },
+  ],
 };
 
 function mockApi(api) {
@@ -36,16 +36,16 @@ function mockApi(api) {
 function mockPlugin(api, plugin) {
   nock(params.gateway)
     .post(`/apis/${api}/plugins`, {
-      name: plugin
+      name: plugin,
     })
     .reply(HTTPStatus.CREATED);
 }
 
 function mockAction(apis) {
-  apis.forEach(function (api) {
+  apis.forEach((api) => {
     mockApi(api);
-    var plugins = api.plugins || [];
-    plugins.forEach(function (plugin) {
+    const plugins = api.plugins || [];
+    plugins.forEach((plugin) => {
       mockPlugin(api.name, plugin);
     });
   });
@@ -54,26 +54,26 @@ function mockAction(apis) {
 describe('a api ', () => {
   it('can register into kong ', (done) => {
     mockAction(params.apis);
-    expect(function() {
+    expect(() => {
       component(null, params);
     }).to.not.throw(Error);
     done();
   });
 
   it('can not register into kong with wrong upstream_url', (done) => {
-    var copy = Object.assign({}, params);
-    copy.upstream = copy.upstream.substr(0, copy.upstream.length-1);
+    const copy = Object.assign({}, params);
+    copy.upstream = copy.upstream.substr(0, copy.upstream.length - 1);
     mockAction(copy.apis);
-    expect(function() {
+    expect(() => {
       component(null, copy);
     }).to.throw(Error);
     done();
   });
   it('can not register into kong with wrong path of api', (done) => {
-    var copy = Object.assign({}, params);
+    const copy = Object.assign({}, params);
     copy.apis[0].path = copy.apis[0].path.substring(1);
     mockAction(copy.apis);
-    expect(function() {
+    expect(() => {
       component(null, copy);
     }).to.throw(Error);
     done();
