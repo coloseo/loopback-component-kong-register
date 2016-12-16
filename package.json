@@ -4,7 +4,9 @@
   "description": "register your apis and plugin into kong",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
     "test": "mocha",
+    "posttest": "npm run lint",
     "start": "DEBUG=loopback:component:registry:kong node ."
   },
   "repository": {
@@ -30,6 +32,9 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chance": "^1.0.4",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.2.0",
     "nock": "^9.0.2"
   }
