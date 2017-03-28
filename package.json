@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha",
-    "posttest": "npm run lint",
+    "test": "DEBUG=loopback:component:registry:kong mocha",
     "start": "DEBUG=loopback:component:registry:kong node ."
   },
   "repository": {
@@ -25,17 +24,20 @@
   },
   "homepage": "https://github.com/coloseo/loopback-component-kong-register#readme",
   "dependencies": {
+    "bluebird": "^3.5.0",
+    "chai": "^3.5.0",
+    "chance": "^1.0.6",
+    "co": "^4.6.0",
     "debug": "^2.4.4",
     "http-status": "^0.2.3",
+    "nock": "^9.0.9",
+    "ramda": "^0.23.0",
     "superagent": "^3.3.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chance": "^1.0.4",
     "eslint": "^3.12.2",
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-import": "^2.2.0",
-    "mocha": "^3.2.0",
-    "nock": "^9.0.2"
+    "mocha": "^3.2.0"
   }
 }

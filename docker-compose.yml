@@ -1,0 +1,38 @@
+version: "2"
+
+services:
+  db:
+    image: hub.coloseo.io/postgres:9.6-alpine
+    volumes:
+      - "./.data:/var/lib/postgresql/data/pgdata"
+    environment:
+      - POSTGRES_USER=kong
+      - POSTGRES_DB=kong
+      - POSTGRES_PASSWORD=kong
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      
+  dbconsole:
+    image: hub.coloseo.io/sosedoff/pgweb
+    ports:
+      - "8081:8081"
+    links:
+      - db:db.gateway.sparrow
+    depends_on: 
+      - db
+
+  gateway:
+    image: repo.coloseo.io/kong:0.10.0-alpine
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=db.gateway.sparrow
+      - KONG_PG_PASSWORD=kong
+    command: kong start --vv
+    volumes:
+      - "./.conf:/conf"
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    depends_on: 
+      - db
+    links:
+      - db:db.gateway.sparrow
